@@ -12,36 +12,37 @@ class DetailsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider.value(
         value: BlocProvider.of<DogBloc>(context),
-        child: SafeArea(
-          child: Scaffold(
-            appBar: AppBar(
-              title: Text(title),
-              leading: IconButton(
-                  icon: Icon(Icons.arrow_back),
-                  onPressed: () {
-                    BlocProvider.of<DogBloc>(context).add(LoadAllBreeds());
-                    Navigator.pop(context);
-                  }),
-            ),
-            body: Center(
-              child: BlocBuilder<DogBloc, DogState>(
-                builder: (context, state) {
-                  if (state is DogImagesLoaded) {
-                    List<String> images = state.imageURLs;
+        child: WillPopScope(
+          onWillPop: () {
+            BlocProvider.of<DogBloc>(context).add(LoadAllBreeds());
+            return Future.value(true);
+          },
+          child: SafeArea(
+            child: Scaffold(
+              appBar: AppBar(
+                title: Text(title),
+              ),
+              body: Center(
+                child: BlocBuilder<DogBloc, DogState>(
+                  builder: (context, state) {
+                    if (state is DogImagesLoaded) {
+                      List<String> images = state.imageURLs;
 
-                    return GridView.builder(
-                        itemCount: images.length,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3),
-                        itemBuilder: (context, index) {
-                          return Image.network(images[index]);
-                        });
-                  }
-                  if (state is DogInfoFailed)
-                    return Text(
-                        'Failed to load. Please check network connection');
-                  return CircularProgressIndicator();
-                },
+                      return GridView.builder(
+                          itemCount: images.length,
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 3),
+                          itemBuilder: (context, index) {
+                            return Image.network(images[index]);
+                          });
+                    }
+                    if (state is DogInfoFailed)
+                      return Text(
+                          'Failed to load. Please check network connection');
+                    return CircularProgressIndicator();
+                  },
+                ),
               ),
             ),
           ),
