@@ -1,4 +1,4 @@
-import 'package:eval/data/network.dart';
+import 'package:eval/domain/network.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

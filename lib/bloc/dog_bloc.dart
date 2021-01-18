@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:eval/data/breed.dart';
-import 'package:eval/data/repository.dart';
+import 'package:eval/data/models/breed.dart';
+import 'package:eval/domain/repository.dart';
 import 'package:meta/meta.dart';
 
 part 'dog_event.dart';

@@ -1,7 +1,7 @@
-import 'package:eval/data/network.dart';
+import 'package:eval/domain/network.dart';
 import 'package:eval/utils/helper.dart';
 
-import 'breed.dart';
+import 'package:eval/data/models/breed.dart';
 
 class Repository {
   NetworkDataSource network;

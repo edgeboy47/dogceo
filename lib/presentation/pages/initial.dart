@@ -1,5 +1,5 @@
-import 'package:eval/bloc/bloc/dog_bloc.dart';
-import 'package:eval/data/breed.dart';
+import 'package:eval/bloc/dog_bloc.dart';
+import 'package:eval/data/models/breed.dart';
 import 'package:eval/presentation/pages/details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

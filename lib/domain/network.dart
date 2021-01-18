@@ -1,7 +1,8 @@
 import 'package:dio/dio.dart';
+import 'package:eval/data/remote_data_source.dart';
 import 'package:eval/utils/helper.dart';
 
-class NetworkDataSource {
+class NetworkDataSource extends RemoteDataSource{
   String allBreedsURL = "https://dog.ceo/api/breeds/list/all";
 
   Future<List<String>> getAllBreeds() async {

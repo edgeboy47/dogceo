@@ -1,4 +1,4 @@
-import 'package:eval/bloc/bloc/dog_bloc.dart';
+import 'package:eval/bloc/dog_bloc.dart';
 import 'package:eval/injector.dart';
 import 'package:eval/presentation/pages/initial.dart';
 import 'package:flutter/material.dart';
