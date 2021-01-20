@@ -1,14 +1,18 @@
 import 'package:dio/dio.dart';
 import 'package:eval/data/remote_data_source.dart';
 import 'package:eval/utils/helper.dart';
+import 'package:flutter/foundation.dart';
 
-class NetworkDataSource extends RemoteDataSource{
+class DioClient extends RemoteDataSource {
   String allBreedsURL = "https://dog.ceo/api/breeds/list/all";
+  Dio client;
+  
+  DioClient({@required this.client});
 
   Future<List<String>> getAllBreeds() async {
     List<String> breeds = [];
     try {
-      final response = await Dio().get(allBreedsURL);
+      final response = await client.get(allBreedsURL);
       if (response.statusCode == 200 && response.data['status'] == "success") {
         Map<String, dynamic> message = response.data['message'];
 
@@ -37,7 +41,7 @@ class NetworkDataSource extends RemoteDataSource{
     List<String> imageURLs = [];
 
     try {
-      final response = await Dio().get(url);
+      final response = await client.get(url);
       if (response.statusCode == 200 && response.data['status'] == "success") {
         Map<String, dynamic> data = response.data;
         imageURLs = List.from(data['message']).cast<String>();

@@ -1,28 +1,40 @@
-import 'package:eval/domain/network.dart';
+import 'package:eval/data/local_data_source.dart';
+import 'package:eval/data/remote_data_source.dart';
 import 'package:eval/utils/helper.dart';
 
 import 'package:eval/data/models/breed.dart';
+import 'package:flutter/foundation.dart';
 
 class Repository {
-  NetworkDataSource network;
+  RemoteDataSource remoteDataSource;
+  LocalDataSource localCache;
+  List<Breed> _localAllBreedsList;
+  Map<String, List> _localImagesMap;
 
-  Repository(this.network);
+  Repository({@required this.remoteDataSource, @required this.localCache})
+      : _localImagesMap = {};
 
   Future<List<Breed>> getAllBreeds() async {
-    List<String> allBreedsList = await network.getAllBreeds();
-    List<Breed> allBreeds = [];
+    if (_localAllBreedsList == null) {
+      List<String> allBreedsList = await remoteDataSource.getAllBreeds();
+      List<Breed> allBreeds = [];
 
-    for (var breed in allBreedsList) {
-      String title = breed;
-      String slug = slugFromTitle(title);
+      for (String breed in allBreedsList) {
+        String title = breed;
+        String slug = slugFromTitle(title);
 
-      allBreeds.add(Breed(title, slug));
+        allBreeds.add(Breed(title, slug));
+      }
+
+      _localAllBreedsList ??= allBreeds;
     }
-
-    return allBreeds;
+    return _localAllBreedsList;
   }
 
-  Future<List<String>> getAllImagesForBreed(Breed breed) async{
-    return await network.getAllImagesForBreed(breed.slug);
+  Future<List<String>> getAllImagesForBreed(Breed breed) async {
+    _localImagesMap[breed.title] ??=
+        await remoteDataSource.getAllImagesForBreed(breed.slug);
+
+    return _localImagesMap[breed.title];
   }
 }

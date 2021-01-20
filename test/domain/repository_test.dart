@@ -1,14 +1,14 @@
-import 'package:eval/domain/network.dart';
+import 'package:eval/domain/dio_client.dart';
 import 'package:test/test.dart';
 import 'package:mockito/mockito.dart';
 
-class MockNetworkDataSource extends Mock implements NetworkDataSource {}
+class MockDioClient extends Mock implements DioClient {}
 
 void main() {
-  MockNetworkDataSource mockNetwork;
+  MockDioClient mockNetwork;
 
   setUp(() {
-    mockNetwork = MockNetworkDataSource();
+    mockNetwork = MockDioClient();
   });
   group('Repository functions:', () {
     test('getAllBreeds()', () async {});
