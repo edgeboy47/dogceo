@@ -1,6 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:eval/bloc/dog_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shimmer/shimmer.dart';
 
 class DetailsPage extends StatelessWidget {
   final String title;
@@ -33,7 +35,17 @@ class DetailsPage extends StatelessWidget {
                               SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 3),
                           itemBuilder: (context, index) {
-                            return Image.network(images[index]);
+                            return CachedNetworkImage(
+                              imageUrl: images[index],
+                              placeholder: (context, url) => Shimmer.fromColors(
+                                  child: Container(
+                                    color: Colors.black,
+                                  ),
+                                  baseColor: Colors.grey,
+                                  highlightColor: Colors.white),
+                              errorWidget: (context, url, error) =>
+                                  Icon(Icons.error),
+                            );
                           });
                     }
                     if (state is DogInfoFailed)
